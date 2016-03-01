@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>My Old Kentucky Home</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+    </head>
+
+    <body>
+
+        <h1 id="title">My Old Kentucky Home</h1>
+
+        <video src="https://www.cs.tufts.edu/comp/20/my_old_kentucky_home.mp4" id="music_video" controls></video>
+        <div id="timeindic"></div>
+        <div id="lyrics"></div>
+
+        <script>
+            var music_video = document.getElementById("music_video");
+            music_video.addEventListener("timeupdate", setLyrics, false);
+
+            function setLyrics() {
+                var lyrics = document.getElementById("lyrics");
+                var timeindic = document.getElementById("timeindic");
+                var time = (document.getElementById("music_video")).currentTime;
+                var beat = (Math.floor((time - 9.0) * 2.36) / 2);
+
+                timeindic.innerHTML = time;
+                lyrics.innerHTML = beat;
+
+                if (beat < -0.5) {
+                    lyrics.innerHTML = "(Prelude)";
+
+                } else if (beat < 0) {
+                    lyrics.innerHTML = "<span class='hi'>The</span> sun shines bright";
+                } else if (beat < 1) {
+                    lyrics.innerHTML = "The <span class='hi'>sun</span> shines bright";
+                } else if (beat < 2) {
+                    lyrics.innerHTML = "The sun <span class='hi'>shines</span> bright";
+                } else if (beat < 3) {
+                    lyrics.innerHTML = "The sun shines <span class='hi'>bright</span>";
+
+                } else if (beat < 3.5) {
+                    lyrics.innerHTML = "<span class='hi'>in</span> My Old Kentucky Home,";
+                } else if (beat < 4) {
+                    lyrics.innerHTML = "in <span class='hi'>My</span> Old Kentucky Home,";
+                } else if (beat < 5) {
+                    lyrics.innerHTML = "in My <span class='hi'>Old</span> Kentucky Home,";
+                } else if (beat < 6) {
+                    lyrics.innerHTML = "in My Old <span class='hi'>Kentucky</span> Home,";
+                } else if (beat < 7.5) {
+                    lyrics.innerHTML = "in My Old Kentucky <span class='hi'>Home</span>,";
+
+                } else if (beat < 8) {
+                    lyrics.innerHTML = "<span class='hi'>'Tis</span> summer, the people are gay;";
+                } else if (beat < 9.5) {
+                    lyrics.innerHTML = "'Tis <span class='hi'>summer</span>, the people are gay;";
+                } else if (beat < 10) {
+                    lyrics.innerHTML = "'Tis summer, <span class='hi'>the</span> people are gay;";
+                } else if (beat < 11.5) {
+                    lyrics.innerHTML = "'Tis summer, the <span class='hi'>people</span> are gay;";
+                } else if (beat < 12) {
+                    lyrics.innerHTML = "'Tis summer, the people <span class='hi'>are</span> gay;";
+                } else if (beat < 15.5) {
+                    lyrics.innerHTML = "'Tis summer, the people are <span class='hi'>gay</span>;";
+
+                } else if (beat < 16) {
+                    lyrics.innerHTML = "<span class='hi'>The</span> corn-top's ripe";
+                } else if (beat < 17) {
+                    lyrics.innerHTML = "The <span class='hi'>corn</span>-top's ripe";
+                } else if (beat < 18) {
+                    lyrics.innerHTML = "The corn-<span class='hi'>top's</span> ripe";
+                } else if (beat < 19) {
+                    lyrics.innerHTML = "The corn-top's <span class='hi'>ripe</span>";
+
+                } else if (beat < 19.5) {
+                    lyrics.innerHTML = "<span class='hi'>and</span> the meadow's in the bloom";
+                } else if (beat < 20) {
+                    lyrics.innerHTML = "and <span class='hi'>the</span> meadow's in the bloom";
+                } else if (beat < 21) {
+                    lyrics.innerHTML = "and the <span class='hi'>meadow's</span> in the bloom";
+                } else if (beat < 21.5) {
+                    lyrics.innerHTML = "and the meadow's <span class='hi'>in</span> the bloom";
+                } else if (beat < 22) {
+                    lyrics.innerHTML = "and the meadow's in <span class='hi'>the</span> bloom";
+                } else if (beat < 23) {
+                    lyrics.innerHTML = "and the meadow's in the <span class='hi'>bloom</span>";
+
+                } else if (beat < 23.5) {
+                    lyrics.innerHTML = "<span class='hi'>While</span> the birds make music all the day.";
+                } else if (beat < 24) {
+                    lyrics.innerHTML = "While <span class='hi'>the</span> birds make music all the day.";
+                } else if (beat < 25) {
+                    lyrics.innerHTML = "While the <span class='hi'>birds</span> make music all the day.";
+                } else if (beat < 26) {
+                    lyrics.innerHTML = "While the birds <span class='hi'>make</span> music all the day.";
+                } else if (beat < 27) {
+                    lyrics.innerHTML = "While the birds make <span class='hi'>music</span> all the day.";
+                } else if (beat < 27.5) {
+                    lyrics.innerHTML = "While the birds make music <span class='hi'>all</span> the day.";
+                } else if (beat < 28) {
+                    lyrics.innerHTML = "While the birds make music all <span class='hi'>the</span> day.";
+                } else if (beat < 31.5) {
+                    lyrics.innerHTML = "While the birds make music all the <span class='hi'>day</span>.";
+
+                } else if (beat < 32) {
+                    lyrics.innerHTML = "<span class='hi'>The</span> young folks roll";
+                } else if (beat < 33) {
+                    lyrics.innerHTML = "The <span class='hi'>young</span> folks roll";
+                } else if (beat < 34) {
+                    lyrics.innerHTML = "The young <span class='hi'>folks</span> roll";
+                } else if (beat < 35) {
+                    lyrics.innerHTML = "The young folks <span class='hi'>roll</span>";
+
+                } else if (beat < 35.5) {
+                    lyrics.innerHTML = "<span class='hi'>on</span> the little cabin floor,";
+                } else if (beat < 36) {
+                    lyrics.innerHTML = "on <span class='hi'>the</span> little cabin floor,";
+                } else if (beat < 37) {
+                    lyrics.innerHTML = "on the <span class='hi'>little</span> cabin floor,";
+                } else if (beat < 38) {
+                    lyrics.innerHTML = "on the little <span class='hi'>cabin</span> floor,";
+                } else if (beat < 39.5) {
+                    lyrics.innerHTML = "on the little cabin <span class='hi'>floor</span>,";
+
+                } else if (beat < 40) {
+                    lyrics.innerHTML = "<span class='hi'>All</span> merry, all happy and bright;";
+                } else if (beat < 41.5) {
+                    lyrics.innerHTML = "All <span class='hi'>merry</span>, all happy and bright;";
+                } else if (beat < 42) {
+                    lyrics.innerHTML = "All merry, <span class='hi'>all</span> happy and bright;";
+                } else if (beat < 43.5) {
+                    lyrics.innerHTML = "All merry, all <span class='hi'>happy</span> and bright;";
+                } else if (beat < 44) {
+                    lyrics.innerHTML = "All merry, all happy <span class='hi'>and</span> bright;";
+                } else if (beat < 47.5) {
+                    lyrics.innerHTML = "All merry, all happy and <span class='hi'>bright</span>;";
+
+                } else if (beat < 48) {
+                    lyrics.innerHTML = "<span class='hi'>By 'n'</span> by hard times";
+                } else if (beat < 49) {
+                    lyrics.innerHTML = "By 'n' <span class='hi'>by</span> hard times";
+                } else if (beat < 50) {
+                    lyrics.innerHTML = "By 'n' by <span class='hi'>hard</span> times";
+                } else if (beat < 51) {
+                    lyrics.innerHTML = "By 'n' by hard <span class='hi'>times</span>";
+
+                } else if (beat < 51.5) {
+                    lyrics.innerHTML = "<span class='hi'>comes</span> a-knocking at the door,";
+                } else if (beat < 52) {
+                    lyrics.innerHTML = "comes <span class='hi'>a</span>-knocking at the door,";
+                } else if (beat < 53) {
+                    lyrics.innerHTML = "comes a-<span class='hi'>knocking</span> at the door,";
+                } else if (beat < 53.5) {
+                    lyrics.innerHTML = "comes a-knocking <span class='hi'>at</span> the door,";
+                } else if (beat < 54) {
+                    lyrics.innerHTML = "comes a-knocking at <span class='hi'>the</span> door,";
+                } else if (beat < 55) {
+                    lyrics.innerHTML = "comes a-knocking at the <span class='hi'>door</span>,";
+
+                } else if (beat < 55.5) {
+                    lyrics.innerHTML = "<span class='hi'>Then</span> My Old Kentucky Home, good night!";
+                } else if (beat < 56) {
+                    lyrics.innerHTML = "Then <span class='hi'>My</span> Old Kentucky Home, good night!";
+                } else if (beat < 56.5) {
+                    lyrics.innerHTML = "Then My <span class='hi'>Old</span> Kentucky Home, good night!";
+                } else if (beat < 58) {
+                    lyrics.innerHTML = "Then My Old <span class='hi'>Kentucky</span> Home, good night!";
+                } else if (beat < 59.5) {
+                    lyrics.innerHTML = "Then My Old Kentucky <span class='hi'>Home</span>, good night!";
+                } else if (beat < 60) {
+                    lyrics.innerHTML = "Then My Old Kentucky Home, <span class='hi'>good</span> night!";
+                } else if (beat < 64.5) {
+                    lyrics.innerHTML = "Then My Old Kentucky Home, good <span class='hi'>night</span>!";
+
+                } else if (beat < 71.5) {
+                    lyrics.innerHTML = "(Chorus)</br><span class='hi'>Weep no more, my lady</span>";
+                } else if (beat < 79) {
+                    lyrics.innerHTML = "(Chorus)</br><span class='hi'>Oh weep no more today;</span>";
+                } else if (beat < 84) {
+                    lyrics.innerHTML = "(Chorus)</br><span class='hi'>We will sing one song</span>";
+                } else if (beat < 88) {
+                    lyrics.innerHTML = "(Chorus)</br><span class='hi'>For My Old Kentucky Home</span>";
+                } else {
+                    lyrics.innerHTML = "(Chorus)</br><span class='hi'>For My Old Kentucky Home, far away.</span>";
+                }
+            }
+        </script>
+    </body>
+</html>	
