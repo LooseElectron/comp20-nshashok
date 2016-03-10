@@ -1,4 +1,4 @@
-Homework 3 README
+Lab 5 README
 
 --------------------STUDENTS----------------------------
 Student: Nikolas Shashok        [nshash01]]
