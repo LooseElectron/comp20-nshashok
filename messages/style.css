@@ -1,1 +1,15 @@
 /* Your CSS here... */
+body {
+        font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.msg {
+        background-color: #3f88c5;
+        border: 6px solid #3f88c5;
+        border-radius: 6px;
+        color: white;
+        font-size: 14px;
+}
+
+.usr {
+        font-size: 10px;
+}
