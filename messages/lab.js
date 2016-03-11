@@ -6,7 +6,6 @@ function parse() {
             if (request.readyState == 4 && request.status == 200) {
                         var raw = request.responseText;
                         var messages = JSON.parse(raw);
-                        console.log(messages);
 
                         var elem = document.getElementById("messages");
 
@@ -21,7 +20,7 @@ function parse() {
                 }
         }
 
-        request.open("GET", "https://messagehub.herokuapp.com/messages.json", true);
+        request.open("GET", "data.json", true);
 
         request.send(null);
 }
