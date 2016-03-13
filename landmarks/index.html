@@ -11,7 +11,8 @@
         <script>
             var lat = 0, lng = 0;
             var login = "WALLACE_HEATH";
-            var data = null, info = null, map = null, marker_array = null;
+            var data = null, info = null, map = null;
+            var person_array = null, landmark_array = null;
             var user_image = {
                     url: "images/user_icon.png",
                     scaledSize: new google.maps.Size(64, 72),
@@ -86,6 +87,7 @@
                         data = JSON.parse(raw);
                         console.log(data);
                         displayLandmarks();
+                        displayPeople();
                     }
                 };
 
@@ -93,9 +95,9 @@
             }
 
             function displayLandmarks() {
-                marker_array = new Array(data.landmarks.length);
+                landmark_array = new Array(data.landmarks.length);
                 for (i = 0; i < data.landmarks.length; i++) {
-                    marker_array[i] = new google.maps.Marker({
+                    landmark_array[i] = new google.maps.Marker({
                         position: new google.maps.LatLng(
                             data.landmarks[i].geometry.coordinates[1],
                             data.landmarks[i].geometry.coordinates[0]
@@ -103,14 +105,33 @@
                         animation: google.maps.Animation.DROP,
                         icon: landmark_image,
                         map: map,
-                        title: "Landmark"
+                        title: data.landmarks[i].properties.Details
                     });
-                    marker_array[i].addListener("click", function() {
+                    landmark_array[i].addListener("click", function() {
                         return showInfo(this);
                     });
                     console.log(data.landmarks[i].geometry.coordinates);
                 }
-                console.log(marker_array);
+                console.log(landmark_array);
+            }
+
+            function displayPeople() {
+                people_array = new Array(data.people.length);
+                for (i = 0; i < data.people.length; i++) {
+                    if (data.people[i].login != login) {
+                        people_array[i] = new google.maps.Marker({
+                            position: new google.maps.LatLng(
+                                data.people[i].lat, data.people[i].lng),
+                            animation: google.maps.Animation.DROP,
+                            icon: person_image,
+                            map: map,
+                            title: data.people[i].login
+                        });
+                        people_array[i].addListener("click", function() {
+                            return showInfo(this);
+                        });
+                    }
+                }
             }
 
             function showInfo(curr_marker) {
