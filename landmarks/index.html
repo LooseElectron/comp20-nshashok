@@ -11,9 +11,7 @@
         <script>
             var lat = 0, lng = 0;
             var login = "WALLACE_HEATH";
-            var data = null;
-            var info = null;
-            var map = null;
+            var data = null, info = null, map = null, marker_array = null;
             var user_image = {
                     url: "images/user_icon.png",
                     scaledSize: new google.maps.Size(64, 72),
@@ -43,7 +41,6 @@
                         console.log(lat);
                         console.log(lng);
                         initialize_map();
-                        getLandmarks();
                     });
                 } else {
                     alert("Geolocation is not supported by your web browser");
@@ -67,11 +64,10 @@
                 console.log(marker);
 
                 marker.addListener("click", function() {
-                    info.close();
-                    info = new google.maps.InfoWindow({content: "Here I am!"});
-                    info.open(map, marker);
+                    return showInfo(marker);
                 });
 
+                getLandmarks();
             }
 
             function getLandmarks() {
@@ -97,21 +93,32 @@
             }
 
             function displayLandmarks() {
-                var i = 0;
-                var marker_array = new Array(data.landmarks.length);
+                marker_array = new Array(data.landmarks.length);
                 for (i = 0; i < data.landmarks.length; i++) {
                     marker_array[i] = new google.maps.Marker({
                         position: new google.maps.LatLng(
-                            data.landmarks[i].geometry.coordinates[0],
-                            data.landmarks[i].geometry.coordinates[1]
+                            data.landmarks[i].geometry.coordinates[1],
+                            data.landmarks[i].geometry.coordinates[0]
                         ),
                         animation: google.maps.Animation.DROP,
-                        icon: user_image,
+                        icon: landmark_image,
                         map: map,
                         title: "Landmark"
                     });
+                    marker_array[i].addListener("click", function() {
+                        return showInfo(this);
+                    });
+                    console.log(data.landmarks[i].geometry.coordinates);
                 }
                 console.log(marker_array);
+            }
+
+            function showInfo(curr_marker) {
+                if (info != null) {
+                    info.close();
+                }
+                info = new google.maps.InfoWindow({content: curr_marker.title});
+                info.open(map, curr_marker);
             }
 
         </script>
