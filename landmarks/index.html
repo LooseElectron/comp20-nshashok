@@ -9,12 +9,18 @@
         <link rel="stylesheet" href="landmarks_styles.css" />
 
         <script>
-            function initialize_map() {
-                var myPosition = {lat: -34.397, lng: 150.644};
-                var map = new google.maps.Map(document.getElementById("map"),
-                            {center: {lat: -34.397, lng: 150.644}, zoom: 15});
+            var lat = 0, lng = 0;
 
-                var marker = new google.maps.Marker({position: myPosition,
+            getLocation();
+
+            function initialize_map() {
+
+                var my_position = new google.maps.LatLng(lat, lng);
+                console.log(my_position);
+
+                var map = new google.maps.Map(document.getElementById("map"),
+                            {center: my_position, zoom: 15});
+                var marker = new google.maps.Marker({position: my_position,
                           animation: google.maps.Animation.DROP, map: map,
                                                     title: "Here I am!"});
                 marker.addListener("click", function() {
@@ -22,6 +28,20 @@
                 });
                 var info = new google.maps.InfoWindow({content: "Here I am!"});
 
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        lat = position.coords.latitude;
+                        lng = position.coords.longitude;
+                        console.log(lat);
+                        console.log(lng);
+                        initialize_map();
+                    });
+                } else {
+                    alert("Geolocation is not supported by your web browser");
+                }
             }
         </script>
 
