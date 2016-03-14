@@ -1,7 +1,7 @@
 var lat = 0, lng = 0;
 var login = "WALLACE_HEATH";
-var data = null, info = null, map = null;
-var person_array = null, landmark_array = null;
+var data = null, info = null, map = null, poly_line = null;
+var person_array = null, landmark_array = null, marker = null;
 var people_shown = true, landmarks_shown = true;
 var user_image = {
         url: "images/user_icon.png",
@@ -45,7 +45,7 @@ function initializeMap() {
 
     map = new google.maps.Map(document.getElementById("map"),
                 {center: my_position, zoom: 15});
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: my_position,
         animation: google.maps.Animation.DROP,
         map: map,
@@ -101,14 +101,16 @@ function initializeLandmarks() {
         });
         console.log(data.landmarks[i].geometry.coordinates);
     }
+    findNearestLandmark();
     console.log(landmark_array);
 }
 
 function initializePeople() {
     people_array = new Array(data.people.length);
+    var this_lat, this_lng;
     for (i = 0; i < data.people.length; i++) {
-        var this_lat = data.people[i].lat;
-        var this_lng = data.people[i].lng;
+        this_lat = data.people[i].lat;
+        this_lng = data.people[i].lng;
         people_array[i] = new google.maps.Marker({
             position: new google.maps.LatLng(this_lat, this_lng),
             animation: google.maps.Animation.DROP,
@@ -130,8 +132,38 @@ function showInfo(curr_marker) {
     if (info != null) {
         info.close();
     }
+
     info = new google.maps.InfoWindow({content: curr_marker.title});
     info.open(map, curr_marker);
+}
+
+function findNearestLandmark() {
+    var nearest_distance = Infinity;
+    var this_lat, this_lng, this_distance, near_lat, near_lng;
+    for (i = 0; i < data.landmarks.length; i++) {
+        this_lat = data.landmarks[i].geometry.coordinates[1];
+        this_lng = data.landmarks[i].geometry.coordinates[0];
+        this_distance = Haversine(this_lat, this_lng, lat, lng);
+        if (this_distance <= nearest_distance) {
+            nearest_distance = this_distance;
+            near_lat = this_lat;
+            near_lng = this_lng;
+            marker.title = "Nearest landmark is: " +
+                data.landmarks[i].properties.Location_Name +
+                "<br/>" + this_distance + " miles away";
+        }
+    }
+    var poly_line_coords = [
+    {lat: lat, lng: lng},
+    {lat: near_lat, lng: near_lng}];
+
+    poly_line = new google.maps.Polyline({
+        path: poly_line_coords,
+        geodesic: true,
+        strokeColor: "#0000FF",
+        strokeWeight: 3,
+        map: map
+    });
 }
 
 function togglePeople() {
@@ -149,8 +181,10 @@ function toggleLandmarks() {
     for (i = 0; i < landmark_array.length; i++) {
         if (landmarks_shown) {
             landmark_array[i].setMap(null);
+            poly_line.setMap(null);
         } else {
             landmark_array[i].setMap(map);
+            poly_line.setMap(map);
         }
     }
     landmarks_shown = !landmarks_shown;
