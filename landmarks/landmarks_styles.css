@@ -1,8 +1,19 @@
 html, body {
+        background-color: #4CAF50;
         height: 100%;
         margin: 0px;
         padding: 0px;
 }
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    font-size: 16px;   
+}
+
 #map {
         height: 100%;
 }

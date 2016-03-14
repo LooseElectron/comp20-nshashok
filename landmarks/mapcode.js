@@ -29,8 +29,6 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(function(position) {
             lat = position.coords.latitude;
             lng = position.coords.longitude;
-            console.log(lat);
-            console.log(lng);
             initializeMap();
         });
     } else {
@@ -41,7 +39,6 @@ function getLocation() {
 function initializeMap() {
 
     var my_position = new google.maps.LatLng(lat, lng);
-    console.log(my_position);
 
     map = new google.maps.Map(document.getElementById("map"),
                 {center: my_position, zoom: 15});
@@ -52,7 +49,6 @@ function initializeMap() {
         icon: user_image,
         title: "Here I am!"
     });
-    console.log(marker);
 
     marker.addListener("click", function() {
         return showInfo(marker);
@@ -65,7 +61,6 @@ function getLandmarks() {
     var source = "https://defense-in-derpth.herokuapp.com/sendLocation";
 
     var post = "login=" + login + "&lat=" + lat + "&lng=" + lng;
-    console.log(post);
 
     var request = new XMLHttpRequest();
     request.open("POST", source, true);
@@ -75,7 +70,6 @@ function getLandmarks() {
         if (request.readyState == 4 && request.status == 200) {
             var raw = request.responseText;
             data = JSON.parse(raw);
-            console.log(data);
             initializeLandmarks();
             initializePeople();
         }
@@ -99,19 +93,17 @@ function initializeLandmarks() {
         landmark_array[i].addListener("click", function() {
             return showInfo(this);
         });
-        console.log(data.landmarks[i].geometry.coordinates);
     }
     findNearestLandmark();
-    console.log(landmark_array);
 }
 
 function initializePeople() {
-    people_array = new Array(data.people.length);
+    person_array = new Array(data.people.length);
     var this_lat, this_lng;
     for (i = 0; i < data.people.length; i++) {
         this_lat = data.people[i].lat;
         this_lng = data.people[i].lng;
-        people_array[i] = new google.maps.Marker({
+        person_array[i] = new google.maps.Marker({
             position: new google.maps.LatLng(this_lat, this_lng),
             animation: google.maps.Animation.DROP,
             icon: person_image,
@@ -119,11 +111,11 @@ function initializePeople() {
             title: data.people[i].login + "<br/>Distance from you: " +
                 Haversine(this_lat, this_lng, lat, lng) + "miles"
         });
-        people_array[i].addListener("click", function() {
+        person_array[i].addListener("click", function() {
             return showInfo(this);
         });
-        if (people_array[i].title.split("<br/>")[0] == login) {
-            people_array[i].setMap(null);
+        if (person_array[i].title.split("<br/>")[0] == login) {
+            person_array[i].setMap(null);
         }
     }
 }
@@ -154,8 +146,8 @@ function findNearestLandmark() {
         }
     }
     var poly_line_coords = [
-    {lat: lat, lng: lng},
-    {lat: near_lat, lng: near_lng}];
+    new google.maps.LatLng(lat, lng),
+    new google.maps.LatLng(near_lat, near_lng)];
 
     poly_line = new google.maps.Polyline({
         path: poly_line_coords,
@@ -167,11 +159,11 @@ function findNearestLandmark() {
 }
 
 function togglePeople() {
-    for (i = 0; i < people_array.length; i++) {
+    for (i = 0; i < person_array.length; i++) {
         if (people_shown) {
-            people_array[i].setMap(null);
-        } else if (people_array[i].title.split("<br/>")[0] != login) {
-            people_array[i].setMap(map);
+            person_array[i].setMap(null);
+        } else if (person_array[i].title.split("<br/>")[0] != login) {
+            person_array[i].setMap(map);
         }
     }
     people_shown = !people_shown;
