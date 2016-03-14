@@ -13,6 +13,7 @@
             var login = "WALLACE_HEATH";
             var data = null, info = null, map = null;
             var person_array = null, landmark_array = null;
+            var people_shown = true, landmarks_shown = true;
             var user_image = {
                     url: "images/user_icon.png",
                     scaledSize: new google.maps.Size(64, 72),
@@ -41,14 +42,14 @@
                         lng = position.coords.longitude;
                         console.log(lat);
                         console.log(lng);
-                        initialize_map();
+                        initializeMap();
                     });
                 } else {
                     alert("Geolocation is not supported by your web browser");
                 }
             }
 
-            function initialize_map() {
+            function initializeMap() {
 
                 var my_position = new google.maps.LatLng(lat, lng);
                 console.log(my_position);
@@ -86,15 +87,15 @@
                         var raw = request.responseText;
                         data = JSON.parse(raw);
                         console.log(data);
-                        displayLandmarks();
-                        displayPeople();
+                        initializeLandmarks();
+                        initializePeople();
                     }
                 };
 
                 request.send(post);
             }
 
-            function displayLandmarks() {
+            function initializeLandmarks() {
                 landmark_array = new Array(data.landmarks.length);
                 for (i = 0; i < data.landmarks.length; i++) {
                     landmark_array[i] = new google.maps.Marker({
@@ -115,21 +116,22 @@
                 console.log(landmark_array);
             }
 
-            function displayPeople() {
+            function initializePeople() {
                 people_array = new Array(data.people.length);
                 for (i = 0; i < data.people.length; i++) {
-                    if (data.people[i].login != login) {
-                        people_array[i] = new google.maps.Marker({
-                            position: new google.maps.LatLng(
-                                data.people[i].lat, data.people[i].lng),
-                            animation: google.maps.Animation.DROP,
-                            icon: person_image,
-                            map: map,
-                            title: data.people[i].login
-                        });
-                        people_array[i].addListener("click", function() {
-                            return showInfo(this);
-                        });
+                    people_array[i] = new google.maps.Marker({
+                        position: new google.maps.LatLng(
+                            data.people[i].lat, data.people[i].lng),
+                        animation: google.maps.Animation.DROP,
+                        icon: person_image,
+                        map: map,
+                        title: data.people[i].login
+                    });
+                    people_array[i].addListener("click", function() {
+                        return showInfo(this);
+                    });
+                    if (people_array[i].title == login) {
+                        people_array[i].setMap(null);
                     }
                 }
             }
@@ -142,11 +144,37 @@
                 info.open(map, curr_marker);
             }
 
+            function togglePeople() {
+                for (i = 0; i < people_array.length; i++) {
+                    if (people_shown) {
+                        people_array[i].setMap(null);
+                    } else if (people_array[i].title != login) {
+                        people_array[i].setMap(map);
+                    }
+                }
+                people_shown = !people_shown;
+            }
+
+            function toggleLandmarks() {
+                for (i = 0; i < landmark_array.length; i++) {
+                    if (landmarks_shown) {
+                        landmark_array[i].setMap(null);
+                    } else {
+                        landmark_array[i].setMap(map);
+                    }
+                }
+                landmarks_shown = !landmarks_shown;
+            }
+
         </script>
 
     </head>
 
-    <body onload="initialize_map()">
+    <body onload="initializeMap()">
+        <div id="buttons">
+            <button class="button" onclick=togglePeople()>People</button>
+            <button class="button" onclick=toggleLandmarks()>Landmarks</button>
+        </div>
         <div id="map"></div>
     </body>
 
