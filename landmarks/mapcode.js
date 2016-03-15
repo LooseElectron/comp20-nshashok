@@ -47,7 +47,7 @@ function initializeMap() {
         animation: google.maps.Animation.DROP,
         map: map,
         icon: user_image,
-        title: "Here I am!"
+        title: login +": Here I am!"
     });
 
     marker.addListener("click", function() {
@@ -140,7 +140,7 @@ function findNearestLandmark() {
             nearest_distance = this_distance;
             near_lat = this_lat;
             near_lng = this_lng;
-            marker.title = "Nearest landmark is: " +
+            marker.title = login + "<br>Nearest landmark is: " +
                 data.landmarks[i].properties.Location_Name +
                 "<br/>" + this_distance + " miles away";
         }
