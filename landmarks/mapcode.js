@@ -107,7 +107,6 @@ function initializePeople() {
             position: new google.maps.LatLng(this_lat, this_lng),
             animation: google.maps.Animation.DROP,
             icon: person_image,
-            map: map,
             title: data.people[i].login + "<br/>Distance from you: " +
                 Haversine(this_lat, this_lng, lat, lng) + "miles"
         });
@@ -118,6 +117,7 @@ function initializePeople() {
             person_array[i].setMap(null);
         }
     }
+    togglePeople();
 }
 
 function showInfo(curr_marker) {
