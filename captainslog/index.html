@@ -3,16 +3,43 @@
 <html>
 
 <head>
+        <meta charset="utf-8" />
         <title>Captain's Log</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script>
-          // Your work will be done here...
+                var index;
+                $(document).ready(function() {
+                        index = localStorage.length;
+                        loadLog();
+
+                        $("#msg").keypress(function(event) {
+                                if (event.keyCode == 13) {
+                                        localStorage.setItem(index, new Date() + ": " + $("#msg").val());
+                                        index++
+                                        if ($("#msg").val() == "@clear_log") {
+                                                localStorage.clear();
+                                                index = 0;
+                                                $("#log").html("");
+                                        }
+                                        loadLog();
+                                        $("#msg").val("");
+                                }
+                                
+                        });
+                });
+
+                function loadLog() {
+                        $("#log").html("");
+                        for (i = 0; i < index; i++) {
+                                $("#log").html("<p>" + localStorage.getItem(i) + $("#log").html());
+                        }
+                }
         </script>
 </head>
 
 <body>
         <h1>Captain's Log</h1>
-        <h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+        <h3>New entry: <input type="text" id="msg" name="msg" size="30"/></h3>
         <div id="log"></div>
 </body>
 </html>
