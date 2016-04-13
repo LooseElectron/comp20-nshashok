@@ -58,7 +58,7 @@ function initializeMap() {
 }
 
 function getLandmarks() {
-    var source = "https://defense-in-derpth.herokuapp.com/sendLocation";
+    var source = "http://immense-cove-70122.herokuapp.com/sendLocation";
 
     var post = "login=" + login + "&lat=" + lat + "&lng=" + lng;
 
