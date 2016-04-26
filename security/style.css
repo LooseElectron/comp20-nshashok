@@ -1,0 +1,32 @@
+body {
+        margin: 20px;
+        font-family: "Arial";
+        font-size: 12px;
+}
+
+img {
+        max-width: 750px;
+        max-height: 750px;
+        width: auto;
+        height: auto;
+        margin: 5px;
+        border: 2px solid black;
+}
+
+code {
+        background-color: #d3d3d3;
+}
+
+.bold {
+        font-weight: bold;
+}
+
+.med {
+        font-weight: bold;
+        color: #cc5200;
+}
+
+.hi {
+        font-weight: bold;
+        color: #990000;
+}
